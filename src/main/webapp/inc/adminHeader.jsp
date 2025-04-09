@@ -9,6 +9,6 @@
 			<div class="adminName">管理者名 : ${adminName}</div>
 		</c:if>
 
-		<button type="button" class="logout-button" onclick="location.href='${pageContext.request.contextPath}/AdminLogout'">ログアウト</button>
+		<button type="button" class="logout-button" onclick="location.href='${pageContext.request.contextPath}/AdminLogoutServlet'">ログアウト</button>
 
 	</header>
