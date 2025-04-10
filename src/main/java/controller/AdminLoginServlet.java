@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import DAO.AdminLoginDAO;
+import dao.AdminLoginDAO;
 import dto.AdminDTO;
 
 @WebServlet("/AdminLoginServlet")

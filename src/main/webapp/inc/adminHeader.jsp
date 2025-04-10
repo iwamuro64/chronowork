@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-	<header>
-		<p>
-			<a href="${pageContext.request.contextPath}/mainJsp/AdminTop" class="logo">CHRONOWORK管理画面</a>
-		</p>
+<header>
+    <p>
+        <a href="${pageContext.request.contextPath}/mainJsp/AdminTop" class="logo">CHRONOWORK管理画面</a>
+    </p>
 
-		<c:if test="${not empty admin}">
-			<div class="adminName">管理者名 : ${adminName}</div>
-		</c:if>
+    <c:if test="${not empty admin}">
+        <div class="adminName">管理者名 : ${adminName}</div>
+    </c:if>
 
-		<button type="button" class="logout-button" onclick="location.href='${pageContext.request.contextPath}/AdminLogoutServlet'">ログアウト</button>
+    <!-- ログアウトボタン -->
+    <button type="button" class="logout-button" onclick="location.href='${pageContext.request.contextPath}/AdminLogoutServlet'">ログアウト</button>
 
-	</header>
+</header>

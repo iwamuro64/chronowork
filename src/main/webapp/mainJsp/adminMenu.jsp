@@ -2,7 +2,7 @@
 <%
     // セッションから管理者名を取得
     String adminName = (String) session.getAttribute("adminName");
-    
+
     // ログインしていない場合はログイン画面へリダイレクト
     if (adminName == null) {
         response.sendRedirect("adminLogin.jsp");
@@ -20,21 +20,26 @@
 <body>
     <div class="header">
         <!-- ヘッダーを挿入 -->
-            <jsp:include page="../inc/adminHeader.jsp" />
+        <jsp:include page="../inc/adminHeader.jsp" />
     </div>
 
     <div class="menu">
         <div class="main_frame">
             <h2>管理者メニュー</h2>
 
-            <!-- 従業員情報管理ボタン -->
-            <form action="EmployeeManagementServlet" method="get">
-                <input type="submit" value="1．従業員情報管理" class="menu_button">
+            <!-- 従業員検索ボタン -->
+            <form action="${pageContext.request.contextPath}mainJsp/employeeSearch.jsp" method="get">
+                <input type="submit" value="1．従業員検索" class="menu_button">
+            </form>
+
+            <!-- 従業員情報追加ボタン -->
+            <form action="${pageContext.request.contextPath}mainJsp/employeeAdd.jsp" method="get">
+                <input type="submit" value="2．従業員情報追加" class="menu_button">
             </form>
 
             <!-- 他の管理機能のボタンもここに追加できます -->
             <!-- <form action="AnotherFunctionServlet" method="get">
-                <input type="submit" value="2．別の管理機能" class="menu_button">
+                <input type="submit" value="3．別の管理機能" class="menu_button">
             </form> -->
         </div>
     </div>
