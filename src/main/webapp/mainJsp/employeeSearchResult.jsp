@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="dto.EmployeeSearchDTO" %> <!-- パッケージ名を修正 -->
+
 <%
     // セッションから管理者名を取得
     String adminName = (String) session.getAttribute("adminName");
@@ -14,7 +17,7 @@
 %>
 
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <title>従業員検索結果</title>
@@ -34,24 +37,44 @@
                 if (employees != null && !employees.isEmpty()) {
             %>
                 <table border="1">
-                    <tr>
-                        <th>従業員ID</th>
-                        <th>名前</th>
-                        <th>部署</th>
-                        <th>役職</th>
-                        <th>雇用形態</th>
-                        <th>ユーザーID</th>
-                    </tr>
-                    <% for (EmployeeSearchDTO employee : employees) { %>
-                    <tr>
-                        <td><%= employee.getEmployeeId() %></td>
-                        <td><%= employee.getName() %></td>
-                        <td><%= employee.getDepartment() %></td>
-                        <td><%= employee.getPosition() %></td>
-                        <td><%= employee.getEmploymentType() %></td>
-                        <td><%= employee.getUserId() %></td>
-                    </tr>
-                    <% } %>
+                    <thead>
+                        <tr>
+                            <th>従業員ID</th>
+                            <th>名前</th>
+                            <th>部署</th>
+                            <th>役職</th>
+                            <th>雇用形態</th>
+                            <th>ユーザーID</th>
+                            <th>編集</th>
+                            <th>削除</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (EmployeeSearchDTO employee : employees) { %>
+                        <tr>
+                            <td><%= employee.getEmployeeId() %></td>
+                            <td><%= employee.getName() %></td>
+                            <td><%= employee.getDepartment() %></td>
+                            <td><%= employee.getPosition() %></td>
+                            <td><%= employee.getEmploymentType() %></td>
+                            <td><%= employee.getUserId() %></td>
+                            <td>
+                                <!-- 編集ボタン -->
+                                <form action="${pageContext.request.contextPath}/EmployeeEditServlet" method="get">
+                                    <input type="hidden" name="employeeId" value="<%= employee.getEmployeeId() %>">
+                                    <input type="submit" value="編集" class="button">
+                                </form>
+                            </td>
+                            <td>
+                                <!-- 削除ボタン -->
+                                <form action="${pageContext.request.contextPath}/EmployeeDeleteServlet" method="post" onsubmit="return confirm('本当に削除しますか？');">
+                                    <input type="hidden" name="employeeId" value="<%= employee.getEmployeeId() %>">
+                                    <input type="submit" value="削除" class="button">
+                                </form>
+                            </td>
+                        </tr>
+                        <% } %>
+                    </tbody>
                 </table>
             <%
                 } else {
@@ -62,7 +85,7 @@
             %>
 
             <!-- TOPボタン -->
-            <form action="adminMenu.jsp" method="get">
+            <form action="${pageContext.request.contextPath}/mainJsp/adminMenu.jsp" method="get">
                 <input type="submit" value="TOPに戻る" class="button">
             </form>
         </div>

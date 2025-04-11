@@ -45,7 +45,7 @@ public class AdminLoginServlet extends HttpServlet {
                 // 認証失敗 -> エラーメッセージを設定してログインページに戻す
                 String errorMsg = "管理者IDまたはパスワードが間違っています。";
                 request.setAttribute("error", errorMsg);  // エラーメッセージをリクエストにセット
-                request.getRequestDispatcher("/adminLogin.jsp").forward(request, response);  // login.jspにフォワード
+                request.getRequestDispatcher("/mainJsp/adminLogin.jsp").forward(request, response);  // login.jspにフォワード
             }
 
         } catch (SQLException e) {

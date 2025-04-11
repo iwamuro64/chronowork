@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import dto.EmployeeDTO;  // 従業員情報を格納するDTOクラスを使用
 
-public class EmployLoginDAO {
+public class EmployeeLoginDAO {
 
     /**
      * ユーザーIDとパスワードを使用して従業員を認証する

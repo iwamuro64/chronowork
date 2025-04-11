@@ -25,7 +25,7 @@
     <div class="menu">
         <div class="main_frame">
             <h2>従業員検索</h2>
-            <form action="EmployeeSearchResultServlet" method="get">
+            <form action="${pageContext.request.contextPath}/EmployeeSearchResultServlet" method="get">
                 <table>
                     <tr>
                         <td><label for="employeeId">従業員ID</label></td>
@@ -58,7 +58,7 @@
             </form>
 
             <!-- TOPボタン -->
-            <form action="adminMenu.jsp" method="get">
+            <form action="${pageContext.request.contextPath}/mainJsp/adminMenu.jsp" method="get">
                 <input type="submit" value="TOPに戻る" class="button">
             </form>
         </div>

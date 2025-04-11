@@ -30,5 +30,10 @@
         <p><%= error %></p>  <!-- エラーメッセージを表示 -->
     </div>
     <% } %>
+    
+     <!-- 戻るボタン -->
+    <form action="${pageContext.request.contextPath}/index.jsp" method="get">
+        <button type="submit">戻る</button>
+    </form>
 </body>
 </html>

@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import dao.EmployLoginDAO;
+import dao.EmployeeLoginDAO;
 import dto.EmployeeDTO;
 
 @WebServlet("/EmployLoginServlet")
@@ -26,7 +26,7 @@ public class EmployLoginServlet extends HttpServlet {
         System.out.println(userId);
         System.out.println(password);
 
-        EmployLoginDAO loginDAO = new EmployLoginDAO();
+        EmployeeLoginDAO loginDAO = new EmployeeLoginDAO();
         EmployeeDTO employee = null;
         
         try {

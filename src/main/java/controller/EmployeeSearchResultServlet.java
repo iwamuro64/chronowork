@@ -24,15 +24,29 @@ public class EmployeeSearchResultServlet extends HttpServlet {
         String employmentType = request.getParameter("employmentType");
         String userId = request.getParameter("userId");
 
+        // パラメータが空の場合、nullをセット（検索条件なしの場合も想定）
+        if (employeeId == null) employeeId = "";
+        if (employeeName == null) employeeName = "";
+        if (department == null) department = "";
+        if (position == null) position = "";
+        if (employmentType == null) employmentType = "";
+        if (userId == null) userId = "";
+
         // EmployeeSearchDAOで検索
         EmployeeSearchDAO employeeSearchDAO = new EmployeeSearchDAO();
-        List<EmployeeSearchDTO> employees = employeeSearchDAO.searchEmployees(employeeId, employeeName, department, position, employmentType, userId);
+        List<EmployeeSearchDTO> employees = null;
+        
+        try {
+            employees = employeeSearchDAO.searchEmployees(employeeId, employeeName, department, position, employmentType, userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // 検索結果をリクエスト属性に設定
         request.setAttribute("employees", employees);
 
         // 結果を表示するJSPに転送
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/employeeSearchResult.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/mainJsp/employeeSearchResult.jsp");
         dispatcher.forward(request, response);
     }
 }
