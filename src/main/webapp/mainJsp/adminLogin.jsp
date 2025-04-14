@@ -24,7 +24,11 @@
             <p>管理者用ログイン画面</p>
         </div>
     </div>
+    
     <div class="main_wrapper">
+    <c:if test="${not empty error}">
+        <p style="color: red;">${error}</p>
+    </c:if>
         <!-- ログインフォーム -->
         <form action="${pageContext.request.contextPath}/AdminLoginServlet" method="post">
             <table class="login_table">

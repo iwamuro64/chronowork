@@ -2,7 +2,7 @@
 
 <header>
     <p>
-        <a href="${pageContext.request.contextPath}/mainJsp/AdminTop" class="logo">CHRONOWORK管理画面</a>
+        <a href="adminMenu.jsp" class="logo">CHRONOWORK管理画面</a>
     </p>
 
     <c:if test="${not empty admin}">

@@ -28,12 +28,12 @@
             <h2>管理者メニュー</h2>
 
             <!-- 従業員検索ボタン -->
-            <form action="${pageContext.request.contextPath}/mainJsp/employeeSearch.jsp" method="get">
+            <form action="${pageContext.request.contextPath}/mainJsp/adminEmployeeSearch.jsp" method="get">
                 <input type="submit" value="1．従業員検索" class="menu_button">
             </form>
 
             <!-- 従業員情報追加ボタン -->
-            <form action="${pageContext.request.contextPath}/mainJsp/employeeAdd.jsp" method="get">
+            <form action="${pageContext.request.contextPath}/mainJsp/adminEmployeeAdd.jsp" method="get">
                 <input type="submit" value="2．従業員情報追加" class="menu_button">
             </form>
 

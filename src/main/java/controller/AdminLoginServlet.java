@@ -52,7 +52,7 @@ public class AdminLoginServlet extends HttpServlet {
             e.printStackTrace();
             String errorMsg = "システムエラーが発生しました。";
             request.setAttribute("error", errorMsg);  // エラーメッセージをセット
-            request.getRequestDispatcher("/adminLogin.jsp").forward(request, response);
+            request.getRequestDispatcher("mainJsp/adminLogin.jsp").forward(request, response);
         }
     }
 }
