@@ -45,7 +45,7 @@ pageEncoding="UTF-8"%>
         <div class="menu-container">
             <h2>ようこそ、<%= name %>さん！</h2> <!-- ユーザー名の表示 -->
             <!-- タイムカードボタン -->
-            <form action="${pageContext.request.contextPath}/timeCard.jsp" method="get">
+            <form action="${pageContext.request.contextPath}/mainJsp/timeCard.jsp" method="get">
                 <button type="submit">タイムカード</button>
             </form>
 
