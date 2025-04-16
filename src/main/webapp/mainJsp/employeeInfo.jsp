@@ -2,6 +2,7 @@
 <%@ page import="dto.EmployeeSearchDTO" %>
 <%@ page import="java.util.List" %>
 
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -10,7 +11,22 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-
+	<!-- セッションからユーザー情報を取得して表示 -->
+    <%
+        String name = (String) session.getAttribute("employeeName");
+        if (name == null) {
+            response.sendRedirect("employeeLogin.jsp"); // セッションが無効な場合、login.jspにリダイレクト
+            return;
+        }
+    %>
+    
+    <header>
+		<div class="header">
+			<!-- ヘッダーを挿入 -->
+			<jsp:include page="../inc/employeeHeader.jsp" />
+		</div>
+	</header>
+	
     <div class="menu">
         <div class="main_frame">
             <h2>従業員情報</h2>
@@ -19,39 +35,32 @@
             <table>
                 <tr>
                     <th>名前</th>
-                    <td><%= request.getAttribute("employeeName") %></td>
+                    <td><%= session.getAttribute("employeeName") %></td>
                 </tr>
                 <tr>
                     <th>部署</th>
-                    <td><%= request.getAttribute("employeeDepartment") %></td>
+                    <td><%= session.getAttribute("employeeDepartment") %></td>
                 </tr>
                 <tr>
                     <th>役職</th>
-                    <td><%= request.getAttribute("employeePosition") %></td>
+                    <td><%= session.getAttribute("employeePosition") %></td>
                 </tr>
                 <tr>
                     <th>雇用形態</th>
-                    <td><%= request.getAttribute("employeeEmploymentType") %></td>
+                    <td><%= session.getAttribute("employmentType") %></td>
                 </tr>
                 <tr>
                     <th>ユーザーID</th>
-                    <td><%= request.getAttribute("employeeUserId") %></td>
+                    <td><%= session.getAttribute("userId") %></td>
                 </tr>
             </table>
 
             <br>
-
-            <!-- 従業員情報編集ボタン -->
-            <form action="${pageContext.request.contextPath}/EmployeeInfoUpdateServlet" method="get">
-                <input type="hidden" name="employeeId" value="<%= request.getAttribute("employeeId") %>">
-                <input type="submit" value="従業員情報編集" class="button">
-            </form>
-
             <br>
 
-            <!-- 従業員マイページに戻るボタン -->
-            <form action="${pageContext.request.contextPath}/mainJsp/employeeMyPage.jsp" method="get">
-                <input type="submit" value="従業員マイページに戻る" class="button">
+            <!-- 従業員メニューに戻るボタン -->
+            <form action="${pageContext.request.contextPath}/mainJsp/employeeMenu.jsp" method="get">
+                <input type="submit" value="従業員メニューに戻る" class="button">
             </form>
         </div>
     </div>

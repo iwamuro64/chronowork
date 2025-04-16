@@ -23,8 +23,8 @@ public class EmployeeLoginServlet extends HttpServlet {
         String userId = request.getParameter("user_id");
         String password = request.getParameter("password");
         
-        System.out.println(userId);
-        System.out.println(password);
+//        System.out.println(userId);
+//        System.out.println(password);
 
         EmployeeLoginDAO loginDAO = new EmployeeLoginDAO();
         EmployeeDTO employee = null;
@@ -36,11 +36,17 @@ public class EmployeeLoginServlet extends HttpServlet {
 
             
             if (employee != null) {
-            	  System.out.println("employee != null");
+//            	  System.out.println("employee != null");
                 // 認証成功 → セッションにユーザー情報を保存
                 HttpSession session = request.getSession();
-                session.setAttribute("employeeName", employee.getName());  // 従業員名
-                session.setAttribute("employeeId", employee.getEmployeeId());  // 従業員ID
+                session.setAttribute("employee", employee);
+
+                session.setAttribute("employeeName", employee.getName());
+                session.setAttribute("employeeId", employee.getEmployeeId());
+                session.setAttribute("employeeDepartment", employee.getDepartment());
+                session.setAttribute("employeePosition", employee.getPosition());
+                session.setAttribute("employmentType", employee.getEmploymentType());
+                session.setAttribute("userId", employee.getUserId());
 
                 // ログイン後のページにリダイレクト
                 response.sendRedirect(request.getContextPath() + "/mainJsp/employeeMenu.jsp");

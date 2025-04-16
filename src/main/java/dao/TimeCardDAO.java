@@ -1,68 +1,100 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import dto.TimeCardStatus;
+
 public class TimeCardDAO {
-    // 出勤時間登録（新規レコード）
-    public void insertClockIn(int employeeId, LocalDateTime clockInTime) {
-        String sql = "INSERT INTO attendance (employee_id, work_date, clock_in) VALUES (?, ?, ?)";
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, employeeId);
-            stmt.setDate(2, Date.valueOf(clockInTime.toLocalDate()));
-            stmt.setTimestamp(3, Timestamp.valueOf(clockInTime));
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    private boolean existsToday(int employeeId, LocalDate date) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM timecards WHERE employee_id = ? AND work_date = ?";
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, employeeId);
+            ps.setDate(2, Date.valueOf(date));
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getInt(1) > 0;
         }
     }
 
-    // 退勤時間更新
-    public void updateClockOut(int employeeId, LocalDateTime clockOutTime) {
-        String sql = "UPDATE attendance SET clock_out = ? WHERE employee_id = ? AND work_date = ?";
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setTimestamp(1, Timestamp.valueOf(clockOutTime));
-            stmt.setInt(2, employeeId);
-            stmt.setDate(3, Date.valueOf(clockOutTime.toLocalDate()));
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void recordClockIn(int employeeId, LocalDate date, LocalDateTime time) throws SQLException {
+        if (existsToday(employeeId, date)) {
+            String sql = "UPDATE timecards SET clock_in = ?, updated_at = NOW() WHERE employee_id = ? AND work_date = ?";
+            try (Connection con = DBManager.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setTimestamp(1, Timestamp.valueOf(time));
+                ps.setInt(2, employeeId);
+                ps.setDate(3, Date.valueOf(date));
+                ps.executeUpdate();
+            }
+        } else {
+            String sql = "INSERT INTO timecards (employee_id, work_date, clock_in, created_at) VALUES (?, ?, ?, NOW())";
+            try (Connection con = DBManager.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setInt(1, employeeId);
+                ps.setDate(2, Date.valueOf(date));
+                ps.setTimestamp(3, Timestamp.valueOf(time));
+                ps.executeUpdate();
+            }
         }
     }
 
-    // 休憩開始更新
-    public void updateBreakStart(int employeeId, LocalDateTime breakStart) {
-        String sql = "UPDATE attendance SET break_start = ? WHERE employee_id = ? AND work_date = ?";
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setTimestamp(1, Timestamp.valueOf(breakStart));
-            stmt.setInt(2, employeeId);
-            stmt.setDate(3, Date.valueOf(breakStart.toLocalDate()));
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void recordClockOut(int employeeId, LocalDate date, LocalDateTime time) throws SQLException {
+        String sql = "UPDATE timecards SET clock_out = ?, updated_at = NOW() WHERE employee_id = ? AND work_date = ?";
+        try (Connection con = DBManager.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setTimestamp(1, Timestamp.valueOf(time));
+            ps.setInt(2, employeeId);
+            ps.setDate(3, Date.valueOf(date));
+            ps.executeUpdate();
         }
     }
 
-    // 休憩終了更新
-    public void updateBreakEnd(int employeeId, LocalDateTime breakEnd) {
-        String sql = "UPDATE attendance SET break_end = ? WHERE employee_id = ? AND work_date = ?";
-        try (Connection conn = DBUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    public void recordBreakStart(int employeeId, LocalDate date, LocalDateTime time) throws SQLException {
+        String sql = "UPDATE timecards SET break_start = ?, updated_at = NOW() WHERE employee_id = ? AND work_date = ?";
+        try (Connection con = DBManager.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setTimestamp(1, Timestamp.valueOf(time));
+            ps.setInt(2, employeeId);
+            ps.setDate(3, Date.valueOf(date));
+            ps.executeUpdate();
+        }
+    }
 
-            stmt.setTimestamp(1, Timestamp.valueOf(breakEnd));
-            stmt.setInt(2, employeeId);
-            stmt.setDate(3, Date.valueOf(breakEnd.toLocalDate()));
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void recordBreakEnd(int employeeId, LocalDate date, LocalDateTime time) throws SQLException {
+        String sql = "UPDATE timecards SET break_end = ?, updated_at = NOW() WHERE employee_id = ? AND work_date = ?";
+        try (Connection con = DBManager.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setTimestamp(1, Timestamp.valueOf(time));
+            ps.setInt(2, employeeId);
+            ps.setDate(3, Date.valueOf(date));
+            ps.executeUpdate();
+        }
+    }
+    
+//    今日の打刻状態を取得するメソッド
+    public TimeCardStatus getTodayStatus(int employeeId, LocalDate date) throws SQLException {
+        String sql = "SELECT clock_in, clock_out, break_start, break_end FROM timecards WHERE employee_id = ? AND work_date = ?";
+        try (Connection con = DBManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, employeeId);
+            ps.setDate(2, Date.valueOf(date));
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                TimeCardStatus status = new TimeCardStatus();
+                status.setClockIn(rs.getTimestamp("clock_in") != null);
+                status.setClockOut(rs.getTimestamp("clock_out") != null);
+                status.setBreakStart(rs.getTimestamp("break_start") != null);
+                status.setBreakEnd(rs.getTimestamp("break_end") != null);
+                return status;
+            } else {
+                return new TimeCardStatus(); // 全部falseで初期化
+            }
         }
     }
 }

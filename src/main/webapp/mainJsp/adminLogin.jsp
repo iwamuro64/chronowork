@@ -16,9 +16,9 @@
 </head>
 <body>
     <div class="header">
-        <!-- ヘッダー内容 -->
-        システム画像
+        <jsp:include page="../inc/adminHeader.jsp" />
     </div>
+    
     <div class="menu">
         <div class="main_frame">
             <p>管理者用ログイン画面</p>

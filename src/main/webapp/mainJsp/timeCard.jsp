@@ -7,35 +7,59 @@
 <title>打刻画面</title>
 </head>
 <body>
-	<div class="menu">
-		<div class="main_frame">
-			<p>従業員用メニュー画面</p>
+	<%@ page import="dto.TimeCardStatus"%>
+	<%
+	TimeCardStatus status = (TimeCardStatus) request.getAttribute("status");
+	boolean clockedIn = status != null && status.isClockIn();
+	boolean clockedOut = status != null && status.isClockOut();
+	boolean breakStarted = status != null && status.isBreakStart();
+	boolean breakEnded = status != null && status.isBreakEnd();
+	%>
+
+	<header>
+		<div class="header">
+			<!-- ヘッダーを挿入 -->
+			<jsp:include page="../inc/employeeHeader.jsp" />
 		</div>
-	</div>
+	</header>
 	<div class="main_wrapper">
 		<div class="employee_button">
 			<form action="${pageContext.request.contextPath}/TimeCardServlet"
 				method="post">
 				<input type="hidden" name="action" value="clock_in">
-				<button type="submit" class="a_display_button">出勤</button>
+				<button type="submit" class="a_display_button"
+					<%=clockedIn ? "disabled" : ""%>>出勤</button>
 			</form>
 			<form action="${pageContext.request.contextPath}/TimeCardServlet"
 				method="post">
 				<input type="hidden" name="action" value="clock_out">
-				<button type="submit" class="a_display_button">退勤</button>
+				<button type="submit" class="a_display_button"
+					<%=!clockedIn || clockedOut ? "disabled" : ""%>>退勤</button>
 			</form>
 			<form action="${pageContext.request.contextPath}/TimeCardServlet"
 				method="post">
 				<input type="hidden" name="action" value="break_start">
-				<button type="submit" class="a_display_button">休憩</button>
+				<button type="submit" class="a_display_button"
+					<%=breakStarted && !breakEnded ? "disabled" : ""%>>休憩</button>
 			</form>
 			<form action="${pageContext.request.contextPath}/TimeCardServlet"
 				method="post">
 				<input type="hidden" name="action" value="break_end">
-				<button type="submit" class="a_display_button">休憩終了</button>
+				<button type="submit" class="a_display_button"
+					<%=!breakStarted || breakEnded ? "disabled" : ""%>>休憩終了</button>
 			</form>
-		</div>
 
+		</div>
+		<form
+			action="${pageContext.request.contextPath}/mainJsp/employeeMenu.jsp"
+			method="get">
+			<input type="submit" value="戻る" class="button">
+		</form>
 	</div>
+	<footer>
+		<div style="text-align: center; padding: 10px;">
+			<small>© 2025 CHRONOWORK.</small>
+		</div>
+	</footer>
 </body>
 </html>

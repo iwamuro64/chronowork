@@ -84,15 +84,16 @@ CREATE TABLE `timecards` (
   `work_date` date NOT NULL,
   `clock_in` datetime DEFAULT NULL,
   `clock_out` datetime DEFAULT NULL,
-  ` break_start` datetime DEFAULT NULL,
-  ` break_end` datetime DEFAULT NULL,
+  `break_start` datetime DEFAULT NULL,
+  `break_end` datetime DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`timecard_id`),
   UNIQUE KEY `employee_id_UNIQUE` (`employee_id`),
   UNIQUE KEY `work_date_UNIQUE` (`work_date`),
   CONSTRAINT `employee_id` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`employee_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='勤怠時刻';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COMMENT='勤怠時刻';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,6 +102,7 @@ CREATE TABLE `timecards` (
 
 LOCK TABLES `timecards` WRITE;
 /*!40000 ALTER TABLE `timecards` DISABLE KEYS */;
+INSERT INTO `timecards` VALUES (1,1,'2025-04-15','2025-04-15 08:59:30','2025-04-15 17:00:30',NULL,NULL,'2025-04-14 23:59:30','2025-04-16 03:27:43',NULL);
 /*!40000 ALTER TABLE `timecards` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -113,4 +115,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-15 17:02:35
+-- Dump completed on 2025-04-16 14:27:59
