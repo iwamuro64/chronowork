@@ -13,7 +13,8 @@
 }
 
 .menu-container button {
-	width: 200px;
+	width: 100%;
+    max-width: 200px;
 	height: 50px;
 	font-size: 18px;
 	margin: 10px;
@@ -65,7 +66,7 @@
 
 			<!-- 従業員マイページボタン -->
 			<form
-				action="${pageContext.request.contextPath}/EditAttendanceServlet"
+				action="${pageContext.request.contextPath}/EmployeeInfoServlet"
 				method="get">
 				<button type="submit">従業員情報確認</button>
 			</form>
