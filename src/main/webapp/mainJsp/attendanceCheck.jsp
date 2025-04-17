@@ -45,6 +45,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+
 <meta charset="UTF-8">
 <title>勤怠確認画面</title>
 <style>
@@ -62,18 +64,19 @@
         <jsp:include page="../inc/employeeHeader.jsp" />
     </header>
     <main>
+    <div class="menu-container">
         <h2>
             勤怠記録：<%=displayYM.getYear()%>年
             <%=displayYM.getMonthValue()%>月
         </h2>
 
         <div>
-            <a href="AttendanceCheckServlet?yearMonth=<%=displayYM.minusMonths(1).toString().substring(0, 7)%>">先月</a>
-            | <a href="AttendanceCheckServlet?yearMonth=<%=LocalDate.now().toString().substring(0, 7)%>">今月</a>
-            | <a href="AttendanceCheckServlet?yearMonth=<%=displayYM.plusMonths(1).toString().substring(0, 7)%>">来月</a>
+            <a href="AttendanceCheckServlet?yearMonth=<%=displayYM.minusMonths(1).toString().substring(0, 7)%>" class="menu-btn">先月</a>
+            | <a href="AttendanceCheckServlet?yearMonth=<%=LocalDate.now().toString().substring(0, 7)%>" class="menu-btn">今月</a>
+            | <a href="AttendanceCheckServlet?yearMonth=<%=displayYM.plusMonths(1).toString().substring(0, 7)%>" class="menu-btn">来月</a>
         </div>
 
-        <table border="1">
+        <table border="1" class="center-table">
             <thead>
                 <tr>
                     <th>日付</th>
@@ -130,8 +133,9 @@
         </table>
 
         <form action="${pageContext.request.contextPath}/mainJsp/employeeMenu.jsp" method="get">
-            <input type="submit" value="戻る" class="button">
+            <input type="submit" value="戻る" class="mini-btn">
         </form>
+        </div>
     </main>
     <footer>
         <div style="text-align: center; padding: 10px;">

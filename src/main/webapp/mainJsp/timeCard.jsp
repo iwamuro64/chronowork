@@ -3,6 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/style.css">
+
 <meta charset="UTF-8">
 <title>打刻画面</title>
 </head>
@@ -22,38 +25,44 @@
 			<jsp:include page="../inc/employeeHeader.jsp" />
 		</div>
 	</header>
-	<div class="main_wrapper">
+	<div class="menu-container">
 		<div class="employee_button">
 			<form action="${pageContext.request.contextPath}/TimeCardServlet"
 				method="post">
 				<input type="hidden" name="action" value="clock_in">
-				<button type="submit" class="a_display_button"
-					<%=clockedIn ? "disabled" : ""%>>出勤</button>
+				<button type="submit" class="menu-btn"
+					<%=clockedIn ? "disabled title='すでに出勤しています'" : ""%>>出勤</button>
 			</form>
+
 			<form action="${pageContext.request.contextPath}/TimeCardServlet"
 				method="post">
 				<input type="hidden" name="action" value="clock_out">
-				<button type="submit" class="a_display_button"
-					<%=!clockedIn || clockedOut ? "disabled" : ""%>>退勤</button>
+				<button type="submit" class="menu-btn"
+					<%=!clockedIn || clockedOut ? "disabled title='まだ出勤していません'" : ""%>>
+					退勤</button>
 			</form>
+
 			<form action="${pageContext.request.contextPath}/TimeCardServlet"
 				method="post">
 				<input type="hidden" name="action" value="break_start">
-				<button type="submit" class="a_display_button"
-					<%=breakStarted && !breakEnded ? "disabled" : ""%>>休憩</button>
+				<button type="submit" class="menu-btn"
+					<%=breakStarted && !breakEnded ? "disabled title='すでに休憩中です'" : ""%>>
+					休憩</button>
 			</form>
+
 			<form action="${pageContext.request.contextPath}/TimeCardServlet"
 				method="post">
 				<input type="hidden" name="action" value="break_end">
-				<button type="submit" class="a_display_button"
-					<%=!breakStarted || breakEnded ? "disabled" : ""%>>休憩終了</button>
+				<button type="submit" class="menu-btn"
+					<%=!breakStarted || breakEnded ? "disabled title='休憩は開始していません'" : ""%>>
+					休憩終了</button>
 			</form>
 
 		</div>
 		<form
 			action="${pageContext.request.contextPath}/mainJsp/employeeMenu.jsp"
 			method="get">
-			<input type="submit" value="戻る" class="button">
+			<input type="submit" value="戻る" class="mini-btn">
 		</form>
 	</div>
 	<footer>

@@ -8,7 +8,8 @@
 <head>
     <meta charset="UTF-8">
     <title>従業員情報表示</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+
 </head>
 <body>
 	<!-- セッションからユーザー情報を取得して表示 -->
@@ -27,12 +28,12 @@
 		</div>
 	</header>
 	
-    <div class="menu">
+    <div class="menu-container">
         <div class="main_frame">
             <h2>従業員情報</h2>
 
             <!-- 従業員情報の表示 -->
-            <table>
+            <table border="1" class="center-table">
                 <tr>
                     <th>名前</th>
                     <td><%= session.getAttribute("employeeName") %></td>
@@ -60,7 +61,7 @@
 
             <!-- 従業員メニューに戻るボタン -->
             <form action="${pageContext.request.contextPath}/mainJsp/employeeMenu.jsp" method="get">
-                <input type="submit" value="従業員メニューに戻る" class="button">
+                <input type="submit" value="戻る" class="mini-btn">
             </form>
         </div>
     </div>

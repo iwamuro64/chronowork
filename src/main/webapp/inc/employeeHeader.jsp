@@ -1,43 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!-- ヘッダー -->
-<header>
-<!--	<p>-->
-<!--        <a href="employeeMenu.jsp" class="logo">CHRONOWORK従業員画面</a>-->
-<!--    </p>-->
-	<form action="${pageContext.request.contextPath}/mainJsp/employeeMenu.jsp" method="get">
-						<button type="submit" name="action" value="home" class="logo-button">
-							<img src="${pageContext.request.contextPath}/images/logo2wide.jpg" alt="従業員メニューへ"  width="40%" height="30%">
-						</button>
-					</form>
-    <!-- ログアウトボタン -->
-    <button type="button" class="logout-button" onclick="location.href='${pageContext.request.contextPath}/EmployeeLogoutServlet'">ログアウト</button>
-	
-<!--	<div class="header_inline_block">-->
-<!--		<nav>-->
-<!--			<ul>-->
-<!--				 ヘッダー左ロゴ (HOME)-->
-<!--				<li>-->
-<!--					<form action="${pageContext.request.contextPath}/MemberTopServlet" method="get">-->
-<!--						<button type="submit" name="action" value="home" class="logo-button">-->
-<!--							<img src="${pageContext.request.contextPath}/images/PhoenixTicketmembers.png" alt="会員ホームページへ">-->
-<!--						</button>-->
-<!--					</form>-->
-<!--				</li>-->
-<!--				 ヘッダー右側 -->
-<!--				<div class="nav">-->
-<!--					 ログアウト -->
-<!--					<li>-->
-<!--						<button-->
-<!--							onclick="location.href='${pageContext.request.contextPath}/LogoutConfirmation'">ログアウト</button>-->
-<!--					</li>-->
-<!--					 マイページ -->
-<!--					<li>-->
-<!--						<button-->
-<!--							onclick="location.href='${pageContext.request.contextPath}/myPage'">マイページ</button>-->
-<!--					</li>-->
-<!--				</div>-->
-<!--			</ul>-->
-<!--		</nav>-->
-<!--	</div>-->
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+    String name = (String) session.getAttribute("employeeName");
+%>
+
+<header class="header-container">
+    <div class="logo-container">
+        <form action="${pageContext.request.contextPath}/mainJsp/employeeMenu.jsp" method="get">
+            <button type="submit" class="logo-button">
+                <img src="${pageContext.request.contextPath}/images/logo2wide.jpg" alt="従業員メニューへ" class="logo-img">
+            </button>
+        </form>
+    </div>
+
+    <div class="spacer"></div> <!-- 空白スペース用 -->
+
+    <div class="auth-button-container">
+        <%
+            if (name != null) {
+        %>
+            <!-- ログアウトボタン -->
+            <form action="${pageContext.request.contextPath}/EmployeeLogoutServlet" method="post">
+                <button type="submit" class="logout-button">ログアウト</button>
+            </form>
+        <%
+            } else {
+        %>
+            <!-- ログインボタン -->
+            <form action="${pageContext.request.contextPath}/mainJsp/employeeLogin.jsp" method="get">
+                <button type="submit" class="login-button">ログイン</button>
+            </form>
+        <%
+            }
+        %>
+    </div>
 </header>

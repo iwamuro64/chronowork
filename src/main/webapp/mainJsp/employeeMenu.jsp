@@ -6,26 +6,8 @@
 <meta charset="UTF-8">
 <title>従業員メニュー</title>
 <link rel="stylesheet" href="javascript:void(0)">
-<style>
-.menu-container {
-	text-align: center;
-	margin-top: 50px;
-}
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 
-.menu-container button {
-	width: 100%;
-    max-width: 200px;
-	height: 50px;
-	font-size: 18px;
-	margin: 10px;
-	cursor: pointer;
-}
-
-.menu-container h2 {
-	font-size: 24px;
-	margin-bottom: 20px;
-}
-</style>
 </head>
 <body>
 	<!-- セッションからユーザー名を取得して表示 -->
@@ -54,28 +36,28 @@
 			<!-- タイムカードボタン -->
 			<form action="${pageContext.request.contextPath}/TimeCardServlet"
 				method="get">
-				<button type="submit">タイムカード</button>
+				<button type="submit" class="menu-btn">タイムカード</button>
 			</form>
 
 
 			<!-- 勤怠確認画面ボタン -->
 			<form action="${pageContext.request.contextPath}/AttendanceCheckServlet"
 				method="get">
-				<button type="submit">勤怠確認</button>
+				<button type="submit" class="menu-btn">勤怠確認</button>
 			</form>
 
 			<!-- 従業員マイページボタン -->
 			<form
 				action="${pageContext.request.contextPath}/EmployeeInfoServlet"
 				method="get">
-				<button type="submit">従業員情報確認</button>
+				<button type="submit" class="menu-btn">従業員情報確認</button>
 			</form>
 
 			<!-- ログアウトボタン -->
 			<form
 				action="${pageContext.request.contextPath}/EmployeeLogoutServlet"
 				method="post">
-				<button type="submit">ログアウト</button>
+				<button type="submit" class="menu-btn">ログアウト</button>
 			</form>
 		</div>
 	</main>
