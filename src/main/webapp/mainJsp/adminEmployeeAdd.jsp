@@ -92,7 +92,7 @@
                     <tr>
                         <td colspan="2">
                             <input type="reset" value="リセット" class="button">
-                            <input type="submit" value="確認" class="button">
+                            <input type="submit" value="追加" class="button">
                         </td>
                     </tr>
                 </table>
